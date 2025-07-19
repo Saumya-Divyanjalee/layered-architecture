@@ -1,33 +1,23 @@
 package com.example.layeredarchitecture.dao;
 
+
+import com.example.layeredarchitecture.dao.custom.impl.QueryDAOimpl;
 import com.example.layeredarchitecture.dao.custom.impl.*;
 
-import java.sql.SQLException;
-
-import static com.example.layeredarchitecture.dao.DAOFactory.DAOTypes.QUERY;
-import static com.sun.java.accessibility.util.EventID.ITEM;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
-    private DAOFactory() throws ClassNotFoundException, SQLException {
-
+    private DAOFactory() {}
+    public static DAOFactory getInstance() {
+        return (daoFactory==null)?new DAOFactory():daoFactory;
     }
-    public static DAOFactory getInstance() throws ClassNotFoundException, SQLException {
-        return (daoFactory == null) ? daoFactory = new DAOFactory() : daoFactory;
-
-//        if (daoFactory == null) {
-//            return  (daoFactory = new DAOFactory());
-//        }else {
-//            return daoFactory;
-        }
-
-        public enum DAOTypes{
+    public enum DAOTypes {
         CUSTOMER,
-        ORDER, ITEM,
-        ORDER_DETAIL, QUERY
-
-        }
-
+        ITEM,
+        ORDER,
+        ORDER_DETAIL,
+        QUERY
+    }
     public SuperDAO getDAO(DAOTypes daoType) {
         switch(daoType){
             case CUSTOMER:
@@ -43,8 +33,5 @@ public class DAOFactory {
             default:
                 return null;
         }
-
-
-
-
+    }
 }

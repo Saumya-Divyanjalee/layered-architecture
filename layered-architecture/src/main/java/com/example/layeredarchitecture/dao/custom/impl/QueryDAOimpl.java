@@ -1,13 +1,14 @@
+
 package com.example.layeredarchitecture.dao.custom.impl;
 
+import com.example.layeredarchitecture.dao.SuperDAO;
 import com.example.layeredarchitecture.dao.custom.QueryDAO;
 import com.example.layeredarchitecture.model.CustomDTO;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class QueryDAOimpl implements QueryDAO {
-
+public class QueryDAOimpl implements QueryDAO, SuperDAO {
     @Override
     public List<CustomDTO> getAllCustomersByOrderCount() throws SQLException, ClassNotFoundException {
         //db operation
@@ -18,5 +19,4 @@ public class QueryDAOimpl implements QueryDAO {
     public List<CustomDTO> getAllCustomersItem() throws SQLException, ClassNotFoundException {
         return List.of();
     }
-
 }

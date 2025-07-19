@@ -59,9 +59,10 @@ public class PlaceOrderFormController {
     private String orderId;
 
 
-    PlaceOrderBO placeOrderBO=new PlaceOrderBOimpl();
+    PlaceOrderBO placeOrderBO = new PlaceOrderBOimpl();
 
-
+    public PlaceOrderFormController() throws SQLException, ClassNotFoundException {
+    }
 
 
     public void initialize() throws SQLException, ClassNotFoundException {

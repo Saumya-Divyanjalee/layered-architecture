@@ -28,4 +28,6 @@ public interface PlaceOrderBO {
 
     boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
 
+    ItemDTO findItem(String id) throws SQLException, ClassNotFoundException;
+
 }

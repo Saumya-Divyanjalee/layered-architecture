@@ -80,9 +80,7 @@ public class ManageCustomersFormController {
                         customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress()));
             }
 
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -167,10 +165,8 @@ public class ManageCustomersFormController {
 
                 customerBO.updateCustomer(new CustomerDTO(name,address,id));
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             CustomerTM selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
@@ -203,10 +199,8 @@ public class ManageCustomersFormController {
             tblCustomers.getSelectionModel().clearSelection();
             initUI();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Failed to delete the customer " + id).show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
