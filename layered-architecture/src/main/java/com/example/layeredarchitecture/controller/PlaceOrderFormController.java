@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.custom.BOFactory;
 import com.example.layeredarchitecture.bo.custom.CustomerBO;
 import com.example.layeredarchitecture.bo.custom.ItemBO;
 import com.example.layeredarchitecture.bo.custom.PlaceOrderBO;
@@ -59,11 +60,7 @@ public class PlaceOrderFormController {
     private String orderId;
 
 
-    PlaceOrderBO placeOrderBO = new PlaceOrderBOimpl();
-
-    public PlaceOrderFormController() throws SQLException, ClassNotFoundException {
-    }
-
+    PlaceOrderBO placeOrderBO =  (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PLACE_ORDER);
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -207,7 +204,6 @@ public class PlaceOrderFormController {
         }
         return "OID-001";
     }
-
     private void loadAllCustomerIds() {
         try {
             ArrayList<CustomerDTO> customerDTOS = placeOrderBO.getAllCustomer();
@@ -328,20 +324,17 @@ public class PlaceOrderFormController {
 
         try {
             return placeOrderBO.placeOrder(orderId, orderDate, customerId, orderDetails);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException throwables){
+          throwables.printStackTrace();
+        }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+
         return false;
     }
 
 
-    public ItemDTO findItem(String code) {
-        try {
-            return placeOrderBO.searchItem(code);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to find the Item " + code, e);
-        }
-    }
+
 
 
 }

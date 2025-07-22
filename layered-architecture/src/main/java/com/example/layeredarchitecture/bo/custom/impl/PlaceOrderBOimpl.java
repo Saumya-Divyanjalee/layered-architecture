@@ -29,9 +29,6 @@ public class PlaceOrderBOimpl implements PlaceOrderBO {
     OrderDAO orderDAO= (OrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
     OrderDetailDAO orderDetailDAO= (OrderDetailDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_DETAIL);
 
-    public PlaceOrderBOimpl() throws SQLException, ClassNotFoundException {
-    }
-
 
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
@@ -55,7 +52,7 @@ public class PlaceOrderBOimpl implements PlaceOrderBO {
 
     @Override
     public String generateOrderId() throws SQLException, ClassNotFoundException {
-        return orderDAO.generateNewId();
+        return orderDAO. generateNewOrderId();
     }
 
     @Override
@@ -73,13 +70,13 @@ public class PlaceOrderBOimpl implements PlaceOrderBO {
         Connection connection = null;
         connection= DBConnection.getDbConnection().getConnection();
         //exits order id?
-        boolean b1=orderDAO.exist(orderId);
+        boolean b1=orderDAO.existOrder(orderId);
         /*if order id already exist*/
         if (b1) {
             return false;
         }
         connection.setAutoCommit(false);
-        boolean b2=orderDAO.save(new OrderDTO(orderId,orderDate,customerId));
+        boolean b2=orderDAO.saveOrder(new OrderDTO(orderId,orderDate,customerId));
         //save oder
         if (!b2) {
             connection.rollback();
@@ -88,7 +85,7 @@ public class PlaceOrderBOimpl implements PlaceOrderBO {
         }
         //save order details
         for (OrderDetailDTO detail : orderDetails) {
-            boolean b3=orderDetailDAO.save(detail);
+            boolean b3=orderDetailDAO.saveOrderDetail(detail);
 
             if (!b3) {
                 connection.rollback();
@@ -115,14 +112,16 @@ public class PlaceOrderBOimpl implements PlaceOrderBO {
         return true;
     }
 
+    @Override
     public ItemDTO findItem(String id) throws SQLException, ClassNotFoundException {
-        try{
+        try {
             return itemDAO.search(id);
-        }catch(SQLException e){
-            throw new RuntimeException("failed to find item"+id,e);
-        }catch(Exception e){
+        }catch (SQLException e){
+            throw new RuntimeException("failed to find item" + id,e);
+        }catch (Exception e){
             e.printStackTrace();
         }
+
         return null;
     }
 }

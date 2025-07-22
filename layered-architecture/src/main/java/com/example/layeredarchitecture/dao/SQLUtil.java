@@ -17,15 +17,14 @@ public class SQLUtil {
         }
         return pstm.executeQuery();
     }
-public static boolean executeUpdate(String sql, Object... obj) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        for (int i = 0; i < obj.length; i++) {
-            pstm.setObject(i + 1, obj[i]);
+    public static boolean executeUpdate(String sql, Object... ob) throws SQLException, ClassNotFoundException {
+        Connection conn = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        for (int i = 0; i < ob.length; i++) {
+            pstm.setObject(i + 1, ob[i]);
         }
-        return pstm.executeUpdate() > 0;
+        return pstm.executeUpdate()>0;
+    }
 }
 
 
-
-}

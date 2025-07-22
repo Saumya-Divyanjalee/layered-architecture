@@ -11,19 +11,39 @@ import java.util.ArrayList;
 
 public class OrderDAOimpl implements OrderDAO {
 
-
-    public String generateNewId() throws SQLException, ClassNotFoundException {
+    @Override
+    public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
+    @Override
+    public boolean existOrder(String orderId) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeQuery("SELECT oid FROM `Orders` WHERE oid=?",orderId).next();
+    }
+    @Override
+    public boolean saveOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)",orderDTO.getOrderId(),orderDTO.getOrderDate(),orderDTO.getCustomerId());
+    }
+
 
     @Override
-    public OrderDTO search(String newValue) throws SQLException, ClassNotFoundException {
+    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
-    public  boolean exist(String orderId)throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeQuery("SELECT oid FROM `Orders` WHERE oid=?",orderId).next();
+    @Override
+    public boolean save(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
     }
 
     @Override
@@ -32,17 +52,12 @@ public class OrderDAOimpl implements OrderDAO {
     }
 
     @Override
-    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
-    public  boolean save(OrderDTO orderDTO)throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)",orderDTO.getOrderId(),orderDTO.getOrderDate(),orderDTO.getCustomerId());
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        return "";
     }
 
     @Override
-    public boolean update(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
-        return false;
+    public OrderDTO search(String id) throws SQLException, ClassNotFoundException {
+        return null;
     }
-
 }
