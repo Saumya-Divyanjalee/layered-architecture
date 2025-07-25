@@ -1,11 +1,12 @@
 package com.example.layeredarchitecture.dao.custom;
 
-import com.example.layeredarchitecture.model.CustomDTO;
+import com.example.layeredarchitecture.dao.SuperDAO;
+import com.example.layeredarchitecture.dto.CustomDTO;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface QueryDAO {
+public interface QueryDAO extends SuperDAO {//most super type eken extend kra
 
     //type ekk dnn one list ekk gttm
     List<CustomDTO> getAllCustomersByOrderCount() throws SQLException, ClassNotFoundException;

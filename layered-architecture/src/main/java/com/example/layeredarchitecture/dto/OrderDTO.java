@@ -1,7 +1,6 @@
-package com.example.layeredarchitecture.model;
+package com.example.layeredarchitecture.dto;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 
